@@ -1,7 +1,6 @@
 package mk.ukim.finki.library.service;
 
 import mk.ukim.finki.library.model.Country;
-import mk.ukim.finki.library.model.Category;
 
 import java.util.List;
 
