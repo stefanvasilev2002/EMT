@@ -2,12 +2,14 @@ package mk.ukim.finki.library.service.impl;
 
 import mk.ukim.finki.library.model.Author;
 import mk.ukim.finki.library.model.exceptions.InvalidAuthorId;
+import mk.ukim.finki.library.model.exceptions.InvalidCountryId;
 import mk.ukim.finki.library.repository.AuthorRepository;
 import mk.ukim.finki.library.service.AuthorService;
 import mk.ukim.finki.library.service.CountryService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
@@ -24,28 +26,28 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Author findById(Long id) {
-        return authorRepository.findById(id).orElseThrow(InvalidAuthorId::new);
+    public Optional<Author> findById(Long id) {
+        return Optional.of(authorRepository.findById(id).orElseThrow(InvalidAuthorId::new));
     }
 
     @Override
-    public Author create(String name, String surname, Long countryId) {
-        return authorRepository.save(new Author(name, surname, countryService.findById(countryId)));
+    public Optional<Author> create(String name, String surname, Long countryId) {
+        return Optional.of(authorRepository.save(new Author(name, surname, countryService.findById(countryId).orElseThrow(InvalidCountryId::new))));
     }
 
     @Override
-    public Author update(Long id, String name, String surname, Long countryId) {
-        Author author = findById(id);
+    public Optional<Author> update(Long id, String name, String surname, Long countryId) {
+        Author author = findById(id).orElseThrow(InvalidAuthorId::new);
         author.setName(name);
         author.setSurname(surname);
-        author.setCountry(countryService.findById(id));
-        return authorRepository.save(author);
+        author.setCountry(countryService.findById(id).orElseThrow(InvalidCountryId::new));
+        return Optional.of(authorRepository.save(author));
     }
 
     @Override
-    public Author delete(Long id) {
-        Author author = findById(id);
+    public Optional<Author> delete(Long id) {
+        Author author = findById(id).orElseThrow(InvalidAuthorId::new);
         authorRepository.deleteById(id);
-        return author;
+        return Optional.of(author);
     }
 }

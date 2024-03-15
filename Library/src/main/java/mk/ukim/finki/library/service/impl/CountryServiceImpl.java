@@ -7,6 +7,7 @@ import mk.ukim.finki.library.service.CountryService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CountryServiceImpl implements CountryService {
@@ -22,27 +23,27 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    public Country findById(Long id) {
-        return countryRepository.findById(id).orElseThrow(InvalidCountryId::new);
+    public Optional<Country> findById(Long id) {
+        return Optional.of(countryRepository.findById(id).orElseThrow(InvalidCountryId::new));
     }
 
     @Override
-    public Country create(String name, String continent) {
-        return countryRepository.save(new Country(name, continent));
+    public Optional<Country> create(String name, String continent) {
+        return Optional.of(countryRepository.save(new Country(name, continent)));
     }
 
     @Override
-    public Country update(Long id, String name, String continent) {
-        Country country = findById(id);
+    public Optional<Country> update(Long id, String name, String continent) {
+        Country country = findById(id).orElseThrow(InvalidCountryId::new);
         country.setName(name);
         country.setContinent(continent);
-        return countryRepository.save(country);
+        return Optional.of(countryRepository.save(country));
     }
 
     @Override
-    public Country delete(Long id) {
-        Country country = findById(id);
+    public Optional<Country> delete(Long id) {
+        Country country = findById(id).orElseThrow(InvalidCountryId::new);
         countryRepository.delete(country);
-        return country;
+        return Optional.of(country);
     }
 }
