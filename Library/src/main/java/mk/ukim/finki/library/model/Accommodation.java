@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Book {
+public class Accommodation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -13,17 +13,17 @@ public class Book {
     @Enumerated(EnumType.STRING)
     Category category;
     @ManyToOne
-    Author author;
-    Integer availableCopies;
+    Host host;
+    Integer availableNights;
 
-    public Book(String name, Category category, Author author, Integer availableCopies) {
+    public Accommodation(String name, Category category, Host host, Integer availableNights) {
         this.name = name;
         this.category = category;
-        this.author = author;
-        this.availableCopies = availableCopies;
+        this.host = host;
+        this.availableNights = availableNights;
     }
 
-    public Book() {
+    public Accommodation() {
 
     }
 }

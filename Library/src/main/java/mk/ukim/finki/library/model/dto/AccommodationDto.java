@@ -4,9 +4,9 @@ import lombok.Data;
 import mk.ukim.finki.library.model.Category;
 
 @Data
-public class BookDto {
+public class AccommodationDto {
     String name;
     Category category;
-    Long authorId;
-    Integer availableCopies;
+    Long hostId;
+    Integer availableNights;
 }

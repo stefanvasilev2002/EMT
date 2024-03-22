@@ -33,7 +33,8 @@ public class CountryController {
     @PostMapping("/add")
     public ResponseEntity<Country> addCountry(@RequestBody CountryDto countryDto)
     {
-        return countryService.create(countryDto.getName(), countryDto.getContinent())
+        return countryService.create(countryDto.getName(),
+                        countryDto.getContinent())
                 .map(country -> ResponseEntity.ok().body(country))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
