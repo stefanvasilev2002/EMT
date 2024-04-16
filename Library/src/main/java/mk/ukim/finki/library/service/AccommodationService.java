@@ -14,4 +14,5 @@ public interface AccommodationService {
     Optional<Accommodation> update(Long id, String name, Category category, Long hostId, Integer availableNights);
     Optional<Accommodation> delete(Long id);
     Optional<Accommodation> lowerAvailableCopies(Long id) throws NoAvailableNights;
+    List<Accommodation> filter(String category);
 }

@@ -1,6 +1,8 @@
 package mk.ukim.finki.library.web;
+import mk.ukim.finki.library.listeners.NoAccommodationsListener;
 import mk.ukim.finki.library.model.Accommodation;
 import mk.ukim.finki.library.model.dto.AccommodationDto;
+import mk.ukim.finki.library.model.events.NoEntitiesOfCategoryEvent;
 import mk.ukim.finki.library.model.exceptions.NoAvailableNights;
 import mk.ukim.finki.library.service.AccommodationService;
 import org.springframework.http.ResponseEntity;
@@ -12,9 +14,10 @@ import java.util.List;
 @RequestMapping("/api/accommodations")
 public class AccommodationController {
     private final AccommodationService accommodationService;
-
-    public AccommodationController(AccommodationService accommodationService) {
+    private final NoAccommodationsListener noEntitiesOfCategoryEventListener;
+    public AccommodationController(AccommodationService accommodationService, NoAccommodationsListener noEntitiesOfCategoryEventListener) {
         this.accommodationService = accommodationService;
+        this.noEntitiesOfCategoryEventListener = noEntitiesOfCategoryEventListener;
     }
 
     @GetMapping("")
@@ -65,5 +68,14 @@ public class AccommodationController {
         return accommodationService.lowerAvailableCopies(id)
                 .map(accommodation -> ResponseEntity.ok().body(accommodation))
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+    @GetMapping("/filter")
+    public ResponseEntity<List<Accommodation>> filterAccommodations(@RequestParam String category) {
+        List<Accommodation> filteredAccommodations = accommodationService.filter(category);
+        if (filteredAccommodations.isEmpty()) {
+            return noEntitiesOfCategoryEventListener.handleNoAccommodationsFound(new NoEntitiesOfCategoryEvent(this, category));
+        } else {
+            return ResponseEntity.ok(filteredAccommodations);
+        }
     }
 }

@@ -17,6 +17,8 @@ import java.util.Optional;
 public class AccommodationServiceImpl implements AccommodationService {
     private final AccommodationRepository accommodationRepository;
     private final HostService hostService;
+
+
     public AccommodationServiceImpl(AccommodationRepository accommodationRepository, HostService hostService) {
         this.accommodationRepository = accommodationRepository;
         this.hostService = hostService;
@@ -65,5 +67,10 @@ public class AccommodationServiceImpl implements AccommodationService {
         }
         accommodation.setAvailableNights(accommodation.getAvailableNights() - 1);
         return Optional.of(accommodationRepository.save(accommodation));
+    }
+
+    @Override
+    public List<Accommodation> filter(String category) {
+        return listAll().stream().filter(x->x.getCategory().name().equals(category)).toList();
     }
 }
