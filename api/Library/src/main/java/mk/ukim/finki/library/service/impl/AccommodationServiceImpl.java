@@ -26,7 +26,7 @@ public class AccommodationServiceImpl implements AccommodationService {
 
     @Override
     public List<Accommodation> listAll() {
-        return accommodationRepository.findAll();
+        return accommodationRepository.findAll().stream().filter(Accommodation::getIsAvailable).toList();
     }
 
     @Override
@@ -60,12 +60,13 @@ public class AccommodationServiceImpl implements AccommodationService {
     }
 
     @Override
-    public Optional<Accommodation> lowerAvailableCopies(Long id) throws NoAvailableNights {
+    public Optional<Accommodation> lowerAvailableNights(Long id) throws NoAvailableNights {
         Accommodation accommodation = findById(id).orElseThrow(InvalidHostId::new);
-        if (accommodation.getAvailableNights() == 0){
+        if (accommodation.getAvailableNights() == 0 || !accommodation.getIsAvailable()){
             throw new NoAvailableNights();
         }
         accommodation.setAvailableNights(accommodation.getAvailableNights() - 1);
+        accommodation.setIsAvailable(false);
         return Optional.of(accommodationRepository.save(accommodation));
     }
 

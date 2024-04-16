@@ -65,7 +65,7 @@ public class AccommodationController {
     }
     @PostMapping("/lowerNights/{id}")
     public ResponseEntity<Accommodation> lowerAvailableNights(@PathVariable Long id) throws NoAvailableNights {
-        return accommodationService.lowerAvailableCopies(id)
+        return accommodationService.lowerAvailableNights(id)
                 .map(accommodation -> ResponseEntity.ok().body(accommodation))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }

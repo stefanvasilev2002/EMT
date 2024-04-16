@@ -15,12 +15,13 @@ public class Accommodation {
     @ManyToOne
     Host host;
     Integer availableNights;
-
+    Boolean isAvailable;
     public Accommodation(String name, Category category, Host host, Integer availableNights) {
         this.name = name;
         this.category = category;
         this.host = host;
         this.availableNights = availableNights;
+        this.isAvailable = true;
     }
 
     public Accommodation() {

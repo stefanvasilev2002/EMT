@@ -13,6 +13,6 @@ public interface AccommodationService {
     Optional<Accommodation> create(String name, Category category, Long hostId, Integer availableNights);
     Optional<Accommodation> update(Long id, String name, Category category, Long hostId, Integer availableNights);
     Optional<Accommodation> delete(Long id);
-    Optional<Accommodation> lowerAvailableCopies(Long id) throws NoAvailableNights;
+    Optional<Accommodation> lowerAvailableNights(Long id) throws NoAvailableNights;
     List<Accommodation> filter(String category);
 }
