@@ -18,10 +18,14 @@ const Header = (props) => {
                     <div className="collapse navbar-collapse" id="navbarCollapse">
                         <ul className="navbar-nav ms-auto">
                             <li className="nav-item">
-                                <Link className="nav-link active" aria-current="page" to="/accommodations">Accommodations</Link>
+                                <Link className="nav-link active" aria-current="page"
+                                      to="/accommodations">Accommodations</Link>
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to="/categories">Categories</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/hosts">Hosts</Link>
                             </li>
                         </ul>
                     </div>

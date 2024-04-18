@@ -9,6 +9,7 @@ import AccommodationService from "../../repository/accommodationRepository";
 import CategoryList from "../Categories/categories";
 import AccommodationLowerAvailableNights
     from "../Accommodations/AccommodationLowerAvailableNights/accommodationLowerAvailableNights.js";
+import HostList from "../Hosts/hosts";
 
 class App extends Component {
 
@@ -68,6 +69,12 @@ class App extends Component {
                             path={"/categories"}
                             element={<CategoryList
                                 categories={this.state.categories}
+                            />}
+                        />
+                        <Route
+                            path={"/hosts"}
+                            element={<HostList
+                                hosts={this.state.hosts}
                             />}
                         />
                         {/* <Navigate to={"/accommodations"} /> */}

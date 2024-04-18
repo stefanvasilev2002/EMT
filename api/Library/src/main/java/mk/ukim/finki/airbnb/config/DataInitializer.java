@@ -29,7 +29,7 @@ public class DataInitializer {
     {
         if(countryService.listAll().isEmpty())
         {
-            for(int i = 0; i < 5; i++)
+            for(int i = 0; i < 8; i++)
             {
                 countryService.create( "Country" + i, "Europe");
             }
@@ -37,7 +37,7 @@ public class DataInitializer {
 
         if(hostService.listAll().isEmpty())
         {
-            for(int i = 0; i < 3; i++)
+            for(int i = 0; i < 8; i++)
             {
                 hostService.create("Name" + i, "Surname" + i, (long)i+1);
             }
